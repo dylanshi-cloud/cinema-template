@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Cinema — Cinematic HTML template for storytelling brands." />
+  <title>Cinema — Cinematic Template</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--bg:#0A0A0A;--text:#F0EFED;--text-light:#8A8780;--accent:#D4A853;--font:'Work Sans',sans-serif;--font-display:'Playfair Display',Georgia,serif;--ease:cubic-bezier(0.22,1,0.36,1)}
+    html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;background:var(--bg)}
+    body{font-family:var(--font);font-weight:300;font-size:1rem;line-height:1.8;color:var(--text);background:var(--bg);overflow-x:hidden}
+    .container{width:100%;max-width:1100px;margin:0 auto;padding:0 clamp(1.5rem,4vw,2.5rem)}
+    a{color:inherit;text-decoration:none}
+    ul{list-style:none}
+
+    /* Cinematic letterbox bars */
+    .letterbox{position:fixed;left:0;right:0;z-index:9999;height:clamp(0px,2vw,16px);background:#000;pointer-events:none}
+    .letterbox--t{top:0}
+    .letterbox--b{bottom:0}
+
+    .nav{position:fixed;top:0;left:0;width:100%;z-index:100;padding:1.5rem 0;mix-blend-mode:difference}
+    .nav__inner{display:flex;align-items:center;justify-content:space-between}
+    .nav__logo{font-family:var(--font-display);font-size:1.4rem;font-style:italic;color:#fff;opacity:0.8}
+    .nav__links{display:flex;gap:2.5rem}
+    .nav__links a{font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.5);transition:color 0.3s}
+    .nav__links a:hover{color:#fff}
+
+    .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+    .hero__overlay{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 0%,var(--bg) 100%),radial-gradient(ellipse at 30% 40%,rgba(212,168,83,0.06) 0%,transparent 60%),radial-gradient(ellipse at 70% 60%,rgba(212,168,83,0.04) 0%,transparent 50%)}
+    .hero__content{position:relative;z-index:1;max-width:800px}
+    .hero__pretitle{font-size:0.65rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;opacity:0.7}
+    .hero h1{font-family:var(--font-display);font-size:clamp(2.8rem,6vw,5rem);font-weight:400;line-height:1.08;margin-bottom:1.5rem}
+    .hero h1 em{font-style:italic;color:var(--accent)}
+    .hero p{font-size:1.1rem;color:var(--text-light);max-width:550px;margin:0 auto 2.5rem;font-weight:300}
+    .btn{display:inline-block;padding:0.9rem 2.5rem;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.15);color:#fff;transition:all 0.4s var(--ease);text-decoration:none}
+    .btn:hover{background:#fff;color:var(--bg)}
+
+    .hero__scroll{position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.3)}
+    .hero__scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--accent),transparent);margin:0.5rem auto 0;animation:scrollPulse 2s ease-in-out infinite}
+    @keyframes scrollPulse{0%,100%{opacity:1}50%{opacity:0.2}}
+
+    section{padding:clamp(5rem,10vw,8rem) 0}
+    .section-header{padding-bottom:3rem}
+    .section-num{font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;opacity:0.6}
+    .section-title{font-family:var(--font-display);font-size:clamp(2rem,4vw,3.2rem);font-weight:400;line-height:1.15;margin-bottom:1rem}
+    .section-text{font-size:1rem;color:var(--text-light);max-width:600px;line-height:1.8}
+
+    .story{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+    .story__visual{aspect-ratio:16/9;background:linear-gradient(135deg,rgba(212,168,83,0.05),transparent);border:1px solid rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;font-size:4rem;color:var(--accent);opacity:0.4}
+
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+    .feature{padding:2rem 0;border-top:1px solid rgba(255,255,255,0.04)}
+    .feature__num{font-family:var(--font-display);font-style:italic;color:var(--accent);font-size:0.9rem;margin-bottom:0.5rem}
+    .feature__title{font-family:var(--font-display);font-size:1.3rem;margin-bottom:0.5rem}
+    .feature__text{font-size:0.85rem;color:var(--text-light)}
+
+    .pricing__card{max-width:420px;margin:0 auto;border:1px solid rgba(255,255,255,0.06);padding:3rem;text-align:center}
+    .pricing__amount{font-family:var(--font-display);font-size:3rem;font-style:italic;color:var(--accent);margin:1.5rem 0}
+    .pricing__amount small{font-size:1rem;color:var(--text-light);font-style:normal;font-family:var(--font)}
+    .pricing__features{list-style:none;margin-bottom:2rem}
+    .pricing__features li{padding:0.5rem 0;color:var(--text-light);border-bottom:1px solid rgba(255,255,255,0.04)}
+
+    .contact_inner{text-align:center}
+    .contact__form{display:flex;gap:0.75rem;max-width:450px;margin:2rem auto 0}
+    .contact__input{flex:1;padding:0.8rem 1.2rem;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:var(--text);font-size:0.9rem;outline:none}
+    .contact__input:focus{border-color:var(--accent)}
+
+    .footer{padding:3rem 0;border-top:1px solid rgba(255,255,255,0.04);text-align:center;color:var(--text-light);font-size:0.85rem}
+
+    .reveal{opacity:0;transform:translateY(30px);transition:opacity 0.8s var(--ease),transform 0.8s var(--ease)}
+    .reveal--visible{opacity:1;transform:translateY(0)}
+
+    @media(max-width:768px){.story,.features{grid-template-columns:1fr}.contact__form{flex-direction:column}}
+  </style>
+</head>
+<body>
+  <div class="letterbox letterbox--t"></div>
+  <div class="letterbox letterbox--b"></div>
+
+  <nav class="nav">
+    <div class="container nav__inner">
+      <a href="#" class="nav__logo">Cinema</a>
+      <ul class="nav__links">
+        <li><a href="#story">Story</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero__overlay"></div>
+    <div class="hero__content">
+      <p class="hero__pretitle">Cinematic Storytelling</p>
+      <h1>Every brand has<br/>a story worth <em>telling.</em></h1>
+      <p>A cinematic HTML template for brands, studios, and storytellers who believe in the power of narrative.</p>
+      <a href="#story" class="btn">Read the Story</a>
+      <div class="hero__scroll">
+        <span>Scroll</span>
+        <div class="hero__scroll-line"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="story">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-num">01 — Narrative</p>
+        <h2 class="section-title">Told in widescreen.</h2>
+      </div>
+      <div class="story">
+        <div class="story__visual">✦</div>
+        <div>
+          <p style="font-size:0.85rem;color:var(--text-light);margin-bottom:1.5rem;letter-spacing:0.1em;text-transform:uppercase">Chapter One</p>
+          <p style="font-size:1.1rem;line-height:1.9;margin-bottom:1.5rem">Cinema brings the language of film to the web. Widescreen framing, deliberate pacing, and a visual hierarchy that guides the eye — and the story.</p>
+          <p style="color:var(--text-light)">Each section is a scene. Each scroll is a transition. The narrative unfolds in chapters, not paragraphs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" style="border-top:1px solid rgba(255,255,255,0.04)">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-num">02 — Craft</p>
+        <h2 class="section-title">Cinematic details.</h2>
+      </div>
+      <div class="features">
+        <div class="feature"><div class="feature__num">01</div><div class="feature__title">Widescreen Ratio</div><div class="feature__text">Cinematic 2.35:1 letterbox bars create an instant film frame aesthetic.</div></div>
+        <div class="feature"><div class="feature__num">02</div><div class="feature__title">Narrative Scroll</div><div class="feature__text">Sections feel like chapters. Each scroll reveals a new scene in the story.</div></div>
+        <div class="feature"><div class="feature__num">03</div><div class="feature__title">Warm Gold Light</div><div class="feature__text">Subtle golden hour lighting — the kind cinematographers wait all day for.</div></div>
+        <div class="feature"><div class="feature__num">04</div><div class="feature__title">Serif Storytelling</div><div class="feature__text">Playfair Display for narrative. Work Sans for clarity. A classic editorial pairing.</div></div>
+        <div class="feature"><div class="feature__num">05</div><div class="feature__title">Dark Immersion</div><div class="feature__text">Black background with warm light sources — like a theater before the film starts.</div></div>
+        <div class="feature"><div class="feature__num">06</div><div class="feature__title">Zero Deps</div><div class="feature__text">Pure HTML + CSS + minimal JS. No frameworks. The story is the star.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center">
+        <p class="section-num">03 — Pricing</p>
+        <h2 class="section-title">One license. Unlimited stories.</h2>
+      </div>
+      <div class="pricing__card reveal">
+        <div style="font-family:var(--font-display);font-size:1.2rem;font-style:italic">Cinema</div>
+        <div class="pricing__amount">¥199 <small>$29</small></div>
+        <ul class="pricing__features">
+          <li>✓ Complete HTML + CSS</li>
+          <li>✓ Cinematic layout system</li>
+          <li>✓ Responsive + dark</li>
+          <li>✓ Documentation</li>
+          <li>✓ Lifetime updates</li>
+        </ul>
+        <a href="https://github.com/dylanshi-cloud/cinema-template#-pricing" class="btn">Buy Now</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container contact_inner reveal">
+      <div class="section-header"><p class="section-num">04 — Connect</p><h2 class="section-title">Start your story.</h2></div>
+      <form class="contact__form"><input type="email" class="contact__input" placeholder="Your email" required /><button type="submit" class="btn">Send</button></form>
+    </div>
+  </section>
+
+  <footer class="footer"><div class="container"><p style="font-family:var(--font-display);font-size:1.2rem;font-style:italic;margin-bottom:0.3rem">Cinema</p><p>Cinematic HTML template. Made with intention.</p><p style="margin-top:1rem;font-size:0.75rem">&copy; 2026 Cinema Template</p></div></footer>
+  <script src="js/main.js"></script>
+</body>
+</html>
